@@ -5,10 +5,7 @@
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## Introduction
 **BaatCheet** is a real-time video chatting application. It allows users to create video meetings, chat with participants, and manage permissions. The project uses the MERN stack (MongoDB, Express.js, React.js, and Node.js) and incorporates WebRTC for real-time video communication.
