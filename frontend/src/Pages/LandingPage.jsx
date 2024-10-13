@@ -106,7 +106,7 @@ const LandingPage = () => {
                                 ? 'hover:bg-gray-950 text-white cursor-pointer'
                                 : 'bg-transparent text-slate-500 cursor-not-allowed'
                         }`}
-                        disabled={!inputValue} // Disable button if no input
+                        disabled={!inputValue}
                     >
                         Join
                     </button>

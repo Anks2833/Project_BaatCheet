@@ -11,6 +11,7 @@ export const authMiddleware = async (req, res, next) => {
 
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log('Decoded token:', decoded);
 
       // Attach user to request object (optional, based on token payload)
       req.user = await userModel.findById(decoded.id).select('-password');

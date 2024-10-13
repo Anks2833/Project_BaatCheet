@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema({
   },
   profilePic: {
     type: String,
-    default: 'defaultProfilePic.png',
   },
   password: {
     type: String,
@@ -51,7 +50,7 @@ const userValidationSchema = Joi.object({
   firstName: Joi.string().trim().required(),
   lastName: Joi.string().trim().required(),
   email: Joi.string().email().required(), // Validate email format
-  profilePic: Joi.string().uri().optional(), // Optional profile picture URL
+  profilePic: Joi.any().optional(), // Optional, allow empty string or valid URI
   password: Joi.string().min(6).required(), // Require password to be at least 6 characters
   confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
     'any.only': 'Passwords must match', // Custom error message for password mismatch
