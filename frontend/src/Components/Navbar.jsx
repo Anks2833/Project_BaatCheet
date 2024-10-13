@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+
+//Icons
 import { FaUserCircle, FaHeadset } from "react-icons/fa";
+import { IoIosLogOut } from "react-icons/io";
+import { MdOutlineSettings, MdOutlineHelp } from "react-icons/md";
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -79,11 +83,30 @@ const Navbar = () => {
             </div>
 
             {dropdownVisible && (
-              <div className="w-[10vw] absolute top-12 right-0 bg-zinc-200 text-black shadow-lg">
+              <div className="w-[18vw] absolute top-12 right-0 bg-zinc-200 text-black shadow-lg rounded-md">
+
+                <div className="flex items-center gap-2 px-6 py-2 border-b">
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <img src={user.profilePic} alt="Profile" className="w-full h-full" />
+                  </div>
+                  <h1>{user.firstName} {user.lastName}</h1>
+                </div>
+
+                <button className="px-6 py-2 hover:bg-gray-300 hover:rounded-tl-md hover:rounded-tr-md w-full flex items-center gap-2">
+                  <div className="text-xl"><MdOutlineSettings /></div>
+                  Settings
+                </button>
+
+                <button className="px-6 py-2 hover:bg-gray-300 hover:rounded-tl-md hover:rounded-tr-md w-full flex items-center gap-2">
+                  <div className="text-xl"><MdOutlineHelp /></div>
+                  Help
+                </button>
+
                 <button
-                  className="px-6 py-2 hover:bg-gray-300 w-full"
+                  className="px-6 py-2 hover:bg-gray-300 hover:rounded-bl-md hover:rounded-br-md w-full flex items-center gap-2"
                   onClick={handleLogout}
                 >
+                  <div className="text-xl"><IoIosLogOut /></div>
                   Log out
                 </button>
               </div>

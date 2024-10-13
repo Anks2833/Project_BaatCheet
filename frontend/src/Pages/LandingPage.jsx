@@ -101,11 +101,10 @@ const LandingPage = () => {
 
                     {/* Join Button */}
                     <button
-                        className={`text-xl px-6 py-1 rounded-lg transition-all ${
-                            inputValue
-                                ? 'hover:bg-gray-950 text-white cursor-pointer'
-                                : 'bg-transparent text-slate-500 cursor-not-allowed'
-                        }`}
+                        className={`text-xl px-6 py-1 rounded-lg transition-all ${inputValue
+                            ? 'hover:bg-gray-950 text-white cursor-pointer'
+                            : 'bg-transparent text-slate-500 cursor-not-allowed'
+                            }`}
                         disabled={!inputValue}
                     >
                         Join

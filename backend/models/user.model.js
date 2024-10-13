@@ -7,11 +7,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    maxlength: 50,
   },
   lastName: {
     type: String,
     required: true,
     trim: true,
+    maxlength: 50,
   },
   email: {
     type: String,
@@ -19,13 +21,23 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
+    maxlength: 255,
   },
   profilePic: {
     type: String,
+    default: '',
   },
   password: {
     type: String,
-    required: true,
+    required: function() {
+      return !this.googleId; // Password is required only if googleId is not present
+    },
+    minlength: 6,
+  },
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
   },
 }, {
   timestamps: true,
@@ -33,7 +45,7 @@ const userSchema = new mongoose.Schema({
 
 // Hash the password before saving
 userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password') || !this.password) return next();
   
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
@@ -42,24 +54,31 @@ userSchema.pre('save', async function(next) {
 
 // Method to compare provided password with stored password
 userSchema.methods.matchPassword = async function(enteredPassword) {
+  if (!this.password) return false;
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
 // Joi Validation Schema
-const userValidationSchema = Joi.object({
-  firstName: Joi.string().trim().required(),
-  lastName: Joi.string().trim().required(),
-  email: Joi.string().email().required(), // Validate email format
-  profilePic: Joi.any().optional(), // Optional, allow empty string or valid URI
-  password: Joi.string().min(6).required(), // Require password to be at least 6 characters
-  confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
-    'any.only': 'Passwords must match', // Custom error message for password mismatch
-  }),
-});
-
-// Function to validate user input
 const validateUser = (user) => {
-  return userValidationSchema.validate(user);
+  const schema = Joi.object({
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).when('googleId', { 
+      is: Joi.exist(), 
+      then: Joi.optional(), 
+      otherwise: Joi.required() 
+    }),
+    confirmPassword: Joi.string().valid(Joi.ref('password')).when('googleId', { 
+      is: Joi.exist(), 
+      then: Joi.optional(), 
+      otherwise: Joi.required() 
+    }),
+    profilePic: Joi.string().allow(''),
+    googleId: Joi.string()
+  });
+
+  return schema.validate(user);
 };
 
 const userModel = mongoose.model('User', userSchema);

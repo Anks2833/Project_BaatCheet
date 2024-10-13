@@ -49,20 +49,25 @@ const Create = () => {
   };
 
   const onSubmit = async (data) => {
-    // Check if passwords match
     if (data.password !== data.confirmPassword) {
       console.error("Passwords do not match");
       return;
     }
 
-    // Create a FormData object
     const formData = new FormData();
     formData.append("firstName", data.firstName);
     formData.append("lastName", data.lastName);
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("confirmPassword", data.confirmPassword);
-    formData.append("profilePic", data.profileImage[0]);
+  
+    if (data.profileImage && data.profileImage[0]) {
+      formData.append("profilePic", data.profileImage[0]);
+    }
+  
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     try {
       const response = await axios.post(
@@ -77,7 +82,7 @@ const Create = () => {
       console.log(response.data);
       navigate("/success");
     } catch (error) {
-      console.error("Error submitting form:", error.response.data);
+      console.error("Error submitting form:", error.response?.data || error.message);
     }
   };
 
@@ -226,10 +231,10 @@ const Create = () => {
 
                 <input
                   type="submit"
-                  onSubmit={handleSubmit(onSubmit)}
                   value="Create"
                   className="bg-blue-600 text-white px-8 py-1 mx-1 mt-24 hover:rounded-tr-3xl hover:rounded-br-3xl cursor-pointer transition-all"
                 />
+
               </div>
             </form>
           </div>

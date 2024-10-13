@@ -7,46 +7,38 @@ import fs from 'fs';
 // Register a new user
 const registerUser = async (req, res) => {
   try {
-    // Validate incoming request body
     const { error } = validateUser(req.body);
-    if (error)
+    if (error) {
       return res.status(400).json({ message: error.details[0].message });
-
-    // Check if user already exists
-    const existingUser = await userModel.findOne({ email: req.body.email });
-    if (existingUser)
-      return res.status(400).json({ message: "Email already registered." });
-
-    // Ensure passwords match
-    const { firstName, lastName, email, password, confirmPassword } = req.body;
-    if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Passwords do not match." });
     }
 
-    // Handle profile picture upload
-    let profilePicUrl = "";
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
+
+    const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already registered.' });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Passwords do not match.' });
+    }
+
+    let profilePicUrl = '';
     if (req.file) {
       const localFilePath = req.file.path;
-
-      // Upload the local file to Cloudinary
-      const result = await cloudinary.uploader.upload(localFilePath, {
-        folder: 'public', // Cloudinary folder
-        use_filename: true,
-        unique_filename: false,
-      });
-
-      // Get the Cloudinary URL
-      profilePicUrl = result.secure_url;
-
-      // Delete the local file after uploading to Cloudinary
-      fs.unlink(localFilePath, (err) => {
-        if (err) {
-          console.error('Error deleting local file:', err);
-        }
-      });
+      try {
+        const result = await cloudinary.uploader.upload(localFilePath, {
+          folder: 'public',
+          use_filename: true,
+          unique_filename: false,
+        });
+        profilePicUrl = result.secure_url;
+        await fs.unlink(localFilePath);
+      } catch (uploadError) {
+        console.error('Error uploading file to Cloudinary:', uploadError);
+      }
     }
 
-    // Create new user with Cloudinary profile picture URL
     const newUser = await userModel.create({
       firstName,
       lastName,
@@ -55,37 +47,52 @@ const registerUser = async (req, res) => {
       profilePic: profilePicUrl,
     });
 
-    // Generate JWT for the new user
     const token = generateToken(newUser._id);
 
-    // Respond with success
-    res.status(201).json({ message: "User registered successfully!", token });
+    res.status(201).json({
+      message: 'User registered successfully!',
+      firstName,
+      lastName,
+      email,
+      profilePic: profilePicUrl,
+      token,
+    });
   } catch (err) {
-    // Handle server error
-    res.status(500).json({ message: "Server error", error: err.message });
+    console.error('Error in registerUser:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
 
 // Login user
-const loginUser = async (req, res) => {
-  const { email, password } = req.body;
-
+const loginUser = async (req) => {
   try {
-    const user = await userModel.findOne({ email });
-    if (!user)
-      return res.status(400).json({ message: "Invalid email or password" });
+    console.log('loginUser function called');
+    console.log('Request:', req);
 
-    // Verify password
-    const isMatch = await user.matchPassword(password);
-    if (!isMatch)
-      return res.status(400).json({ message: "Invalid email or password" });
+    let user;
 
-    // Generate JWT token
+    if (req.user) {
+      // OAuth login
+      user = req.user;
+      console.log('OAuth login, user:', user);
+    } else {
+      // Regular login
+      const { email, password } = req.body;
+      user = await userModel.findOne({ email });
+      console.log('Regular login, user found:', user);
+      if (!user || !(await user.matchPassword(password))) {
+        console.log('Invalid email or password');
+        throw new Error('Invalid email or password');
+      }
+    }
+
     const token = generateToken(user._id);
-    res.status(200).json({ message: "Logged in successfully", token });
-    console.log(req.user)
+    console.log('Token generated:', token);
+
+    return { token };
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    console.error('Error in loginUser:', err);
+    throw err;
   }
 };
 
@@ -101,16 +108,14 @@ const logoutUser = (_, res) => {
 // Show user profile (protected route)
 const showUserProfile = async (req, res) => {
   try {
-    // Fetch user by ID (user ID comes from JWT, attached by authMiddleware)
-    const user = await userModel.findById(req.user._id).select("-password"); // Exclude password field
-
+    const user = await userModel.findById(req.user._id).select('-password');
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
-
     res.status(200).json(user);
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    console.error('Error in showUserProfile:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
 

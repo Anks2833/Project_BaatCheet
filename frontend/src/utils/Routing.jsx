@@ -10,6 +10,7 @@ import SignInOptionsPage from "../Pages/SignInOptionsPage"
 import Video from "../Pages/Video"
 import EndMeet from "../Pages/EndMeet"
 import KickedOutPage from "../Pages/KickedOutPage"
+import OAuthSuccessRedirect from "../Components/Auth/OAuthSuccessRedirect"
 
 
 const Routing = () => {
@@ -20,6 +21,7 @@ const Routing = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<HomePage />} />
+        <Route path="/oauth-success" element={<OAuthSuccessRedirect />} />
         <Route path="/create" element={<CreateAccount />} />
         <Route path="/success" element={<SuccessPage />} />
         <Route path="/options" element={<SignInOptionsPage />} />
