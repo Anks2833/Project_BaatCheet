@@ -1,0 +1,261 @@
+/* SignInOptions.css */
+
+/* Main page styling */
+.signin-page-container {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .signin-page-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 30%),
+      radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.1) 0%, transparent 20%);
+    z-index: 0;
+  }
+  
+  .page-content {
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  /* Container styling */
+  .signin-options-container {
+    background-color: white;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .signin-options-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  /* Logo animation */
+  .logo-icon {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Provider button styling */
+  .providers-container {
+    background-color: white;
+  }
+  
+  .signin-option-button {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .signin-option-button::after {
+    content: "";
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      rgba(0, 0, 0, 0) 0%, 
+      rgba(0, 0, 0, 0.02) 50%, 
+      rgba(0, 0, 0, 0) 100%);
+    transition: left 0.6s ease;
+    z-index: -1;
+  }
+  
+  .signin-option-button:hover::after {
+    left: 100%;
+  }
+  
+  .signin-option-button:first-child {
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+  }
+  
+  .signin-option-button:last-child {
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+  }
+  
+  /* Provider icon styling */
+  .provider-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    transition: transform 0.2s ease;
+  }
+  
+  .signin-option-button:hover .provider-icon-wrapper {
+    transform: scale(1.1);
+  }
+  
+  /* Provider-specific colors */
+  .provider-icon-wrapper.google {
+    color: #fff;
+    background-color: #DB4437;
+  }
+  
+  .provider-icon-wrapper.github {
+    color: #fff;
+    background-color: #24292e;
+  }
+  
+  .provider-icon-wrapper.facebook {
+    color: #fff;
+    background-color: #3b5998;
+  }
+  
+  /* Back button styling */
+  .back-button {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .back-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .back-button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: linear-gradient(90deg, 
+      rgba(255, 255, 255, 0) 0%, 
+      rgba(255, 255, 255, 0.2) 50%, 
+      rgba(255, 255, 255, 0) 100%);
+    transition: left 0.6s ease;
+    z-index: -1;
+  }
+  
+  .back-button:hover::after {
+    left: 100%;
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .card-header {
+      padding: 16px;
+    }
+    
+    .card-footer {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    
+    .back-button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      order: -1;
+      margin-bottom: 8px;
+    }
+    
+    .signin-option-button {
+      padding: 12px 16px;
+    }
+    
+    .provider-name {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .card-header h1 {
+      font-size: 20px;
+    }
+    
+    .card-header p {
+      font-size: 12px;
+    }
+    
+    .provider-icon-wrapper {
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+    }
+  }
+  
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .signin-options-container {
+      background-color: #1f2937;
+      color: #e5e7eb;
+    }
+    
+    .card-header {
+      background-color: #1f2937;
+      border-color: #374151;
+    }
+    
+    .card-header h1 {
+      color: #f3f4f6;
+    }
+    
+    .card-header p {
+      color: #9ca3af;
+    }
+    
+    .providers-container {
+      background-color: #1f2937;
+    }
+    
+    .signin-option-button {
+      color: #e5e7eb;
+      border-color: #374151;
+    }
+    
+    .signin-option-button:hover {
+      background-color: #2d3748;
+    }
+    
+    .card-footer {
+      background-color: #111827;
+      border-top: 1px solid #374151;
+    }
+    
+    .card-footer .text-gray-500 {
+      color: #9ca3af;
+    }
+  }

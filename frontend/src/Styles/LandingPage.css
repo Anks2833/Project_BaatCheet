@@ -1,0 +1,198 @@
+/* LandingPage.css */
+
+/* Base styles and custom background */
+.landing-page {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Gradient text effect */
+  .gradient-text {
+    background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+  
+  /* Blob shape for visual interest */
+  .blob-shape {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(0, 0, 0, 0) 70%);
+    border-radius: 50%;
+    filter: blur(50px);
+    z-index: 0;
+    opacity: 0.6;
+  }
+  
+  /* Enhanced button styles */
+  .new-meeting-btn {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .new-meeting-btn:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .dropdown-menu {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .dropdown-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .dropdown-item:last-child {
+    border-bottom: none;
+  }
+  
+  .icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Input styling */
+  .code-input {
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .code-input:focus {
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  }
+  
+  .join-button {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Animations */
+  .heading-animation {
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  .fade-in-animation {
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .slide-in-animation {
+    animation: slideIn 0.8s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .landing-page {
+      background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+    }
+    
+    .blob-shape {
+      display: none;
+    }
+    
+    .heading-animation {
+      animation-delay: 0.2s;
+    }
+    
+    .fade-in-animation {
+      animation-delay: 0.4s;
+    }
+    
+    .join-button {
+      width: 80%;
+      margin-top: 10px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .landing-page {
+      gap: 1rem;
+    }
+    
+    .left-section {
+      padding-top: 3rem;
+      padding-bottom: 2rem;
+    }
+    
+    .right-section {
+      padding-top: 1rem;
+    }
+    
+    .gradient-text {
+      display: block;
+      margin-top: 0.5rem;
+    }
+    
+    .controls-container {
+      margin-top: 1rem;
+    }
+    
+    .input-container {
+      width: 100%;
+    }
+    
+    .code-input {
+      height: 50px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .landing-page {
+      overflow: hidden;
+    }
+    
+    .left-section::after {
+      content: "";
+      position: absolute;
+      right: 49%;
+      top: 10%;
+      height: 80%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1), transparent);
+    }
+    
+    .new-meeting-btn, .code-input, .join-button {
+      transform: translateY(0);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .new-meeting-btn:hover, .join-button:hover:not([disabled]) {
+      transform: translateY(-2px);
+    }
+  }

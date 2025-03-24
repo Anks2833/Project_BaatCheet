@@ -1,14 +1,25 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { IoMdLock } from "react-icons/io";
+import { FaVideo, FaHome, FaHandPeace } from "react-icons/fa";
+import '../Styles/EndMeet.css';
 
 const EndMeet = () => {
     const navigate = useNavigate();
     const [countdown, setCountdown] = useState(10);
+    const [animate, setAnimate] = useState(false);
 
     useEffect(() => {
+        // Start animation after component mounts
+        setAnimate(true);
+        
         const timer = setInterval(() => {
-            setCountdown(prevCountdown => prevCountdown - 1);
+            setCountdown(prevCountdown => {
+                if (prevCountdown <= 1) {
+                    clearInterval(timer);
+                }
+                return prevCountdown - 1;
+            });
         }, 1000);
 
         const redirectTimer = setTimeout(() => {
@@ -22,30 +33,53 @@ const EndMeet = () => {
     }, [navigate]);
 
     return (
-        <div className="Landing-Page w-[100vw] h-screen flex items-start justify-center overflow-hidden">
-            <div className='absolute top-6 left-6 flex gap-2 text-white'>
-                <h1>{countdown}</h1>
-                <h1>Returning to the home page</h1>
+        <div className="end-meet-container">
+            <div className={`countdown-banner ${countdown <= 3 ? 'urgent' : ''}`}>
+                <div className="countdown-circle">{countdown}</div>
+                <p>Returning to the home page in {countdown} second{countdown !== 1 ? 's' : ''}</p>
             </div>
 
-            <div className='w-[50vw] h-screen flex flex-col items-center justify-start gap-10 pt-10'>
-                <div className='flex flex-col gap-1 items-center'>
-                    <h1 className='text-3xl text-white'>You left the BaatCheet 🥲</h1>
-                    <h1 className='text-white font-extralight'>See you soon!! Anks</h1>
+            <div className={`end-meet-content ${animate ? 'animate-in' : ''}`}>
+                <div className="end-meet-header">
+                    <FaHandPeace className="wave-icon" />
+                    <h1>You left the BaatCheet</h1>
+                    <p>See you soon! We hope you had a great conversation.</p>
                 </div>
 
-                <div className='flex gap-5'>
-                    <NavLink to="/video" className='bg-transparent border border-white px-5 py-2 rounded-full text-white hover:bg-black transition-all'>Rejoin</NavLink>
-                    <NavLink to="/" className='bg-black text-white border border-white px-5 py-2 rounded-full hover:bg-transparent transition-all'>Return to home screen</NavLink>
+                <div className="action-buttons">
+                    <NavLink to="/video" className="rejoin-button">
+                        <FaVideo />
+                        <span>Rejoin</span>
+                    </NavLink>
+                    <NavLink to="/" className="home-button">
+                        <FaHome />
+                        <span>Return to home</span>
+                    </NavLink>
                 </div>
 
-                <div className='w-[25vw] h-[20vh] rounded-md border flex items-center text-white px-10'>
-                    <div className='text-5xl bg-black rounded-full p-3'><IoMdLock /></div>
-                    <div className='flex flex-col pl-6'>
-                        <h1 className='text-xl'>Your BaatCheet Is Safe</h1>
-                        <p className='text-xs'>No one can join the BaatCheet unless invited or admitted by the leader</p>
+                <div className="security-box">
+                    <div className="lock-icon">
+                        <IoMdLock />
+                    </div>
+                    <div className="security-info">
+                        <h2>Your BaatCheet Is Secure</h2>
+                        <p>No one can join the BaatCheet unless invited or admitted by the meeting organizer.</p>
                     </div>
                 </div>
+
+                <div className="feedback-prompt">
+                    <p>How was your experience?</p>
+                    <div className="rating-buttons">
+                        <button className="rating-btn good">👍 Good</button>
+                        <button className="rating-btn bad">👎 Bad</button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="background-elements">
+                <div className="circle circle-1"></div>
+                <div className="circle circle-2"></div>
+                <div className="circle circle-3"></div>
             </div>
         </div>
     );
