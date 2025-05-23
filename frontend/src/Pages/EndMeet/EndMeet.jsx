@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { IoMdLock } from "react-icons/io";
 import { FaVideo, FaHome, FaHandPeace } from "react-icons/fa";
-import '../Styles/EndMeet.css';
+import './EndMeet.css';
 
 const EndMeet = () => {
     const navigate = useNavigate();

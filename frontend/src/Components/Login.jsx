@@ -61,41 +61,53 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container flex items-center justify-center min-h-screen p-4 sm:p-6 md:p-8">
-      <div className="login-content-wrapper w-full max-w-md">
-        <div className="auth-box bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="auth-header px-6 sm:px-8 py-6 border-b border-gray-100">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="logo-icon-1 text-blue-600 text-2xl">
+    <div className="login-page min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="blob-shape-1"></div>
+        <div className="blob-shape-2"></div>
+        <div className="grid-pattern"></div>
+      </div>
+
+      <div className="login-content-wrapper w-full max-w-md relative z-10">
+        <div className="auth-box glass-effect rounded-2xl overflow-hidden fade-in-up">
+          <div className="auth-header px-6 sm:px-8 py-8">
+            <div className="flex items-center gap-3 mb-8 fade-in">
+              <div className="logo-icon p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 text-white text-2xl shadow-lg">
                 <FaHeadset />
               </div>
-              <h1 className="font-semibold text-gray-800 text-xl">BaatCheet</h1>
+              <h1 className="font-bold text-white text-2xl">BaatCheet</h1>
             </div>
 
-            <h1 className="font-bold text-2xl text-gray-800">Sign in</h1>
-            <p className="text-gray-500 mt-1 text-sm">
-              Welcome back! Please enter your details
+            <h1 className="font-bold text-3xl text-white mb-2 heading-animation">
+              Welcome back
+            </h1>
+            <p className="text-gray-300 text-sm fade-in">
+              Enter your credentials to access your account
             </p>
           </div>
 
           <div className="auth-form px-6 sm:px-8 py-6">
             {loginError && (
-              <div className="error-message bg-red-50 text-red-600 p-3 rounded-md mb-4 text-sm">
-                {loginError}
+              <div className="error-message glass-error p-4 rounded-lg mb-6 text-sm slide-in">
+                <div className="flex items-center gap-2">
+                  <div className="error-icon">⚠️</div>
+                  <span>{loginError}</span>
+                </div>
               </div>
             )}
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="form-group mb-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              <div className="form-group fade-in" style={{ animationDelay: '0.1s' }}>
                 <label
                   htmlFor="email"
-                  className="text-sm font-medium text-gray-700 block mb-1"
+                  className="text-sm font-medium text-gray-300 block mb-2"
                 >
-                  Email
+                  Email Address
                 </label>
                 <div className="relative">
-                  <div className="input-icon-wrapper">
-                    <MdEmail className="input-icon text-gray-400" />
+                  <div className="input-icon-wrapper absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 z-10">
+                    <MdEmail className="text-lg" />
                   </div>
                   <input
                     id="email"
@@ -106,30 +118,31 @@ const Login = () => {
                         message: "Invalid email address",
                       },
                     })}
-                    className={`input-field w-full py-2 px-10 border ${
-                      errors.email ? "border-red-500" : "border-gray-300"
-                    } rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all`}
+                    className={`input-field glass-input w-full py-3 px-12 text-white placeholder-gray-400 ${
+                      errors.email ? "border-red-400" : ""
+                    }`}
                     type="text"
                     placeholder="Enter your email"
+                    autoComplete="email"
                   />
                 </div>
                 {errors.email && (
-                  <p className="error-text text-red-500 text-xs mt-1">
-                    {errors.email.message}
+                  <p className="error-text text-red-400 text-xs mt-2 flex items-center gap-1">
+                    <span>•</span> {errors.email.message}
                   </p>
                 )}
               </div>
 
-              <div className="form-group mb-4">
+              <div className="form-group fade-in" style={{ animationDelay: '0.2s' }}>
                 <label
                   htmlFor="password"
-                  className="text-sm font-medium text-gray-700 block mb-1"
+                  className="text-sm font-medium text-gray-300 block mb-2"
                 >
                   Password
                 </label>
                 <div className="relative">
-                  <div className="input-icon-wrapper">
-                    <RiLockPasswordLine className="input-icon text-gray-400" />
+                  <div className="input-icon-wrapper absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 z-10">
+                    <RiLockPasswordLine className="text-lg" />
                   </div>
                   <input
                     id="password"
@@ -140,36 +153,38 @@ const Login = () => {
                         message: "Password must be at least 6 characters",
                       },
                     })}
-                    className={`input-field w-full py-2 px-10 border ${
-                      errors.password ? "border-red-500" : "border-gray-300"
-                    } rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all`}
+                    className={`input-field glass-input w-full py-3 px-12 text-white placeholder-gray-400 ${
+                      errors.password ? "border-red-400" : ""
+                    }`}
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
+                    autoComplete="current-password"
                   />
-                  <div
-                    className="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
+                  <button
+                    type="button"
+                    className="password-toggle absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors z-10"
                     onClick={togglePasswordVisibility}
                   >
-                    {showPassword ? <IoEyeOff /> : <IoEye />}
-                  </div>
+                    {showPassword ? <IoEyeOff className="text-lg" /> : <IoEye className="text-lg" />}
+                  </button>
                 </div>
                 {errors.password && (
-                  <p className="error-text text-red-500 text-xs mt-1">
-                    {errors.password.message}
+                  <p className="error-text text-red-400 text-xs mt-2 flex items-center gap-1">
+                    <span>•</span> {errors.password.message}
                   </p>
                 )}
               </div>
 
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex justify-between items-center fade-in" style={{ animationDelay: '0.3s' }}>
                 <div className="flex items-center">
                   <input
                     id="remember"
                     type="checkbox"
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="checkbox-custom h-4 w-4 rounded border-gray-600 bg-transparent text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
                   />
                   <label
                     htmlFor="remember"
-                    className="ml-2 block text-sm text-gray-700"
+                    className="ml-2 block text-sm text-gray-300 cursor-pointer"
                   >
                     Remember me
                   </label>
@@ -177,7 +192,7 @@ const Login = () => {
                 <div>
                   <NavLink
                     to="/forgot-password"
-                    className="text-sm text-blue-600 hover:text-blue-800"
+                    className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
                   >
                     Forgot password?
                   </NavLink>
@@ -187,35 +202,48 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="login-button w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center"
+                className="login-button gradient-button w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 flex items-center justify-center gap-2 fade-in"
+                style={{ animationDelay: '0.4s' }}
               >
-                {isLoading ? (
-                  <span className="loading-spinner mr-2"></span>
-                ) : null}
+                {isLoading && (
+                  <div className="spinner-container">
+                    <div className="spinner"></div>
+                  </div>
+                )}
                 {isLoading ? "Signing in..." : "Sign in"}
               </button>
             </form>
 
-            <div className="mt-6 flex items-center justify-center">
-              <span className="text-gray-500 text-sm">No account?</span>
-              <NavLink
-                to="/create"
-                className="text-blue-600 hover:text-blue-800 text-sm font-medium ml-2"
-              >
-                Create one!
-              </NavLink>
+            <div className="divider-container my-6 fade-in" style={{ animationDelay: '0.5s' }}>
+              <div className="divider"></div>
+              <span className="divider-text text-gray-400 text-sm px-4">OR</span>
+              <div className="divider"></div>
+            </div>
+
+            <div className="text-center fade-in" style={{ animationDelay: '0.6s' }}>
+              <p className="text-gray-400 text-sm">
+                Don't have an account?{" "}
+                <NavLink
+                  to="/create"
+                  className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+                >
+                  Sign up for free
+                </NavLink>
+              </p>
             </div>
           </div>
         </div>
 
         <NavLink
           to="/options"
-          className="sign-in-options mt-4 bg-white hover:bg-gray-50 rounded-lg shadow-md flex items-center px-6 py-4 gap-3 transition-all"
+          className="sign-in-options glass-effect mt-6 rounded-xl flex items-center px-6 py-4 gap-3 transition-all hover:scale-[1.02] fade-in"
+          style={{ animationDelay: '0.7s' }}
         >
-          <div className="text-blue-600 text-lg">
-            <FaKey />
+          <div className="icon-gradient p-2 rounded-lg">
+            <FaKey className="text-white" />
           </div>
-          <h1 className="text-gray-800 font-medium">Sign-in options</h1>
+          <h1 className="text-white font-medium">More sign-in options</h1>
+          <div className="ml-auto text-gray-400">→</div>
         </NavLink>
       </div>
     </div>

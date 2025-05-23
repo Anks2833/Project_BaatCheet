@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { NavLink } from "react-router-dom";
-import "../Styles/LandingPage.css";
+import "./LandingPage.css";
 
 // Icons
 import { MdOutlineOndemandVideo } from "react-icons/md";
@@ -75,17 +75,17 @@ const LandingPage = () => {
                             <div className="dropdown-menu absolute top-full left-0 mt-2 bg-white text-zinc-900 shadow-xl z-10 rounded-lg overflow-hidden">
                                 <NavLink
                                     to="/video"
-                                    className="dropdown-item px-4 py-3 flex items-center text-sm gap-3 hover:bg-zinc-100 cursor-pointer transition-all"
+                                    className="dropdown-item text-black px-4 py-3 flex items-center text-sm gap-3 hover:bg-zinc-100 cursor-pointer transition-all"
                                 >
                                     <div className="icon-container"><FaPlus /></div>
                                     <h1 className='text-base sm:text-md'>Instant Baatcheet</h1>
                                 </NavLink>
                                 <div
-                                    className="dropdown-item px-4 py-3 flex items-center text-sm gap-3 hover:bg-zinc-100 cursor-pointer transition-all"
+                                    className="dropdown-item text-black px-4 py-3 flex items-center text-sm gap-3 hover:bg-zinc-100 cursor-pointer transition-all"
                                     onClick={() => alert('Scheduling Meeting')}
                                 >
                                     <div className="icon-container"><SlCalender /></div>
-                                    <h1 className='text-base sm:text-md'>Scheduled Baatcheet</h1>
+                                    <h1 className='text-base sm:text-md'>Schedule a Baatcheet</h1>
                                 </div>
                             </div>
                         )}

@@ -1,13 +1,9 @@
-/* LandingPage.css */
-
-/* Base styles and custom background */
 .landing-page {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     position: relative;
     overflow-x: hidden;
   }
   
-  /* Gradient text effect */
   .gradient-text {
     background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
     -webkit-background-clip: text;
@@ -43,7 +39,7 @@
   }
   
   .dropdown-item {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); 
   }
   
   .dropdown-item:last-child {
@@ -192,7 +188,7 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
-    .new-meeting-btn:hover, .join-button:hover:not([disabled]) {
+    /* .new-meeting-btn:hover, .join-button:hover:not([disabled]) {
       transform: translateY(-2px);
-    }
+    } */
   }

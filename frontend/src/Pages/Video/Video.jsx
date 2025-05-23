@@ -11,11 +11,11 @@ import { RxCross1 } from "react-icons/rx";
 
 
 //Components
-import WelcomeComponent from "../Components/WelcomeComponent";
-import InfoComponent from "../Components/InfoComponent";
-import PeopleComponent from "../Components/PeopleComponent";
-import ChatComponent from "../Components/ChatComponent";
-import PrivacyComponent from "../Components/PrivacyComponent";
+import WelcomeComponent from "../../Components/WelcomeComponent";
+import InfoComponent from "../../Components/InfoComponent";
+import PeopleComponent from "../../Components/PeopleComponent";
+import ChatComponent from "../../Components/ChatComponent/ChatComponent";
+import PrivacyComponent from "../../Components/PrivacyComponent";
 
 
 const Video = () => {

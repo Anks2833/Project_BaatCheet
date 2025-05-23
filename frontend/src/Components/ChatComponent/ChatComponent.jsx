@@ -2,7 +2,7 @@
 import { IoSend } from "react-icons/io5";
 
 //Components
-import Message from './Message'
+import Message from '../Message'
 
 const ChatComponent = () => {
 
